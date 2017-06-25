@@ -2,13 +2,12 @@ var http = require('http');
 var RtmClient = require('@slack/client').RtmClient;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
-
-var rtm = new RtmClient(token, { logLevel: 'debug' });
-
 var irFreq = require('./irFreq');
 var secret = require('./secret');
 
 var token = secret.slackToken();
+
+var rtm = new RtmClient(token, { logLevel: 'debug' });
 
 let myHouseGroup;
 
