@@ -81,6 +81,7 @@ var irRequestPost = (ir) => {
 
   req.on('error', (e) => {
     console.log('problem with request: ' + e.message);
+    rtm.sendMessage("失敗しちゃった...", myHouseGroup);
   });
 
   req.write(irStr);
