@@ -1,0 +1,15 @@
+exports.lightOn = ()=> {
+  return {"format":"raw","freq":38,"data":[....]};
+}
+
+exports.lightOff = ()=> {
+  return {"format":"raw","freq":38,"data":[.....]};
+}
+
+exports.coolOn = ()=> {
+  return {"format":"raw","freq":38,"data":[.....]};
+}
+
+exports.airConOff = ()=> {
+  return {"format":"raw","freq":38,"data":[.....]};
+}

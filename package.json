@@ -1,0 +1,23 @@
+{
+  "name": "my-home",
+  "version": "1.0.0",
+  "description": "my house!",
+  "main": "index.js",
+  "dependencies": {
+    "@slack/client": "^3.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fumisoro/my-house.git"
+  },
+  "author": "fumiya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fumisoro/my-house/issues"
+  },
+  "homepage": "https://github.com/fumisoro/my-house#readme"
+}
