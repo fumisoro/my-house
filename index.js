@@ -43,10 +43,13 @@ let postAtMyHouse = (message) => {
     rtm.sendMessage("エアコン消してみる!", myHouseGroup);
   } else if(message.text.match(/.*テレビ.*電源.*/)){
     irRequestPost(irFreq.tvPower());
+    rtm.sendMessage("テレビの電源いじってみる!", myHouseGroup);
   } else if(message.text.match(/.*チャンネル.*次.*/)){
     irRequestPost(irFreq.tvChannelNext());
+    rtm.sendMessage("チャンネル次にしてみる!", myHouseGroup);
   } else if(message.text.match(/.*チャンネル.*前.*/)){
     irRequestPost(irFreq.tvChannelPrev());
+    rtm.sendMessage("チャンネル前にしてみる!", myHouseGroup);
   }
 
 }
