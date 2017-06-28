@@ -1,13 +1,13 @@
-var http = require('http');
-var RtmClient = require('@slack/client').RtmClient;
-var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
-var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
-var irFreq = require('./irFreq');
-var secret = require('./secret');
+let http = require('http');
+let RtmClient = require('@slack/client').RtmClient;
+let RTM_EVENTS = require('@slack/client').RTM_EVENTS;
+let CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+let irFreq = require('./irFreq');
+let secret = require('./secret');
 
-var token = secret.slackToken();
+let token = secret.slackToken();
 
-var rtm = new RtmClient(token, { logLevel: 'debug' });
+let rtm = new RtmClient(token, { logLevel: 'debug' });
 
 let myHouseGroup;
 
@@ -27,8 +27,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
   }
 });
 
-var postAtMyHouse = (message) => {
-  var reg = /.*電気.*つけて.*/;
+let postAtMyHouse = (message) => {
+  let reg = /.*電気.*つけて.*/;
   if(message.text.match(/.*電気.*つけて.*/)){
     irRequestPost(irFreq.lightOn());
     rtm.sendMessage("電気つけてみる!", myHouseGroup);
@@ -41,6 +41,12 @@ var postAtMyHouse = (message) => {
   } else if(message.text.match(/.*エアコン.*消して.*/)){
     irRequestPost(irFreq.airConOff());
     rtm.sendMessage("エアコン消してみる!", myHouseGroup);
+  } else if(message.text.match(/.*テレビ.*電源.*/)){
+    irRequestPost(irFreq.tvPower());
+  } else if(message.text.match(/.*チャンネル.*次.*/)){
+    irRequestPost(irFreq.tvChannelNext());
+  } else if(message.text.match(/.*チャンネル.*前.*/)){
+    irRequestPost(irFreq.tvChannelPrev());
   }
 
 }
@@ -54,9 +60,9 @@ rtm.on(RTM_EVENTS.REACTION_REMOVED, function handleRtmReactionRemoved(reaction) 
   console.log('Reaction removed:', reaction);
 });
 
-var irRequestPost = (ir) => {
-  var irStr = JSON.stringify(ir)
-  var options = {
+let irRequestPost = (ir) => {
+  let irStr = JSON.stringify(ir)
+  let options = {
     host: secret.irKitIP(),
     path: "/messages",
     post: 80,
