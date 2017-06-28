@@ -50,6 +50,42 @@ let postAtMyHouse = (message) => {
   } else if(message.text.match(/.*チャンネル.*前.*/)){
     irRequestPost(irFreq.tvChannelPrev());
     rtm.sendMessage("チャンネル前にしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*音量.*上.*/)){
+    irRequestPost(irFreq.tvVolumeUp());
+    rtm.sendMessage("音量上げてみる!", myHouseGroup);
+  } else if(message.text.match(/.*音量.*下.*/)){
+    irRequestPost(irFreq.tvVolumeDown());
+    rtm.sendMessage("音量下げてみる!", myHouseGroup);
+  } else if(message.text.match(/.*入力切替.*/)){
+    irRequestPost(irFreq.tvInputModeChange());
+    rtm.sendMessage("入力切替してみる!", myHouseGroup);
+  } else if(message.text.match(/.*NHK.*/)){
+    irRequestPost(irFreq.tvNHKSogo());
+    rtm.sendMessage("NHKにしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*Eテレ.*/)){
+    irRequestPost(irFreq.tvNHKEtele());
+    rtm.sendMessage("Eテレにしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*TVK.*/)){
+    irRequestPost(irFreq.tvTVK());
+    rtm.sendMessage("TVKにしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*日テレ.*/)){
+    irRequestPost(irFreq.tvNipponTv());
+    rtm.sendMessage("日テレにしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*テレ朝.*/)){
+    irRequestPost(irFreq.tvTvAsahi());
+    rtm.sendMessage("テレ朝にしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*TBS.*/)){
+    irRequestPost(irFreq.tvTBS());
+    rtm.sendMessage("TBSにしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*テレ東.*/)){
+    irRequestPost(irFreq.tvNHKSogo());
+    rtm.sendMessage("テレ東にしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*Tokyo.*MX.*/)){
+    irRequestPost(irFreq.tvTokyoMX());
+    rtm.sendMessage("TokyoMXにしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*放送大学.*/)){
+    irRequestPost(irFreq.tvHosoDaigaku());
+    rtm.sendMessage("放送大学にしてみる!", myHouseGroup);
   }
 
 }
