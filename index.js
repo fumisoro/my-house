@@ -78,7 +78,7 @@ let postAtMyHouse = (message) => {
     irRequestPost(irFreq.tvTBS());
     rtm.sendMessage("TBSにしてみる!", myHouseGroup);
   } else if(message.text.match(/.*テレ東.*/)){
-    irRequestPost(irFreq.tvNHKSogo());
+    irRequestPost(irFreq.tvTvTokyo());
     rtm.sendMessage("テレ東にしてみる!", myHouseGroup);
   } else if(message.text.match(/.*Tokyo.*MX.*/)){
     irRequestPost(irFreq.tvTokyoMX());
