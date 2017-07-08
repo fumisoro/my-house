@@ -31,16 +31,16 @@ let postAtMyHouse = (message) => {
   let reg = /.*電気.*つけて.*/;
   if(message.text.match(/.*電気.*つけて.*/)){
     irRequestPost(irFreq.lightOn());
-    rtm.sendMessage("電気つけてみる!", myHouseGroup);
+    rtm.sendMessage("電気つける!", myHouseGroup);
   } else if(message.text.match(/.*電気.*消して.*/)){
     irRequestPost(irFreq.lightOff());
-    rtm.sendMessage("電気消してみる!", myHouseGroup);
+    rtm.sendMessage("電気消す!", myHouseGroup);
   } else if(message.text.match(/.*エアコン.*冷房.*/)){
     irRequestPost(irFreq.coolOn());
-    rtm.sendMessage("エアコン冷房つけてみる!", myHouseGroup);
+    rtm.sendMessage("エアコンつける!", myHouseGroup);
   } else if(message.text.match(/.*エアコン.*消して.*/)){
     irRequestPost(irFreq.airConOff());
-    rtm.sendMessage("エアコン消してみる!", myHouseGroup);
+    rtm.sendMessage("エアコン消す!", myHouseGroup);
   } else if(message.text.match(/.*テレビ.*電源.*/)){
     irRequestPost(irFreq.tvPower());
     rtm.sendMessage("テレビの電源いじってみる!", myHouseGroup);
@@ -86,6 +86,15 @@ let postAtMyHouse = (message) => {
   } else if(message.text.match(/.*放送大学.*/)){
     irRequestPost(irFreq.tvHosoDaigaku());
     rtm.sendMessage("放送大学にしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*キャスト.*/)){
+    inputModeInterval(2);
+    rtm.sendMessage("ChromeCastにしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*switch.*/)){
+    inputModeInterval(3);
+    rtm.sendMessage("switchにしてみる!", myHouseGroup);
+  } else if(message.text.match(/.*[pc|ps4|].*/)){
+    inputModeInterval(4);
+    rtm.sendMessage("pcかps4にしてみる!", myHouseGroup);
   }
 
 }
@@ -131,6 +140,16 @@ let irRequestPost = (ir) => {
 
   req.write(irStr);
   req.end();
+}
+
+let inputModeInterval = function(times){
+  var count = 0;
+  var id = setInterval(function(){
+  irRequestPost(irFreq.tvInputModeChange());
+  count+=1;
+  if(times <= count){　
+    clearInterval(id);　//idをclearIntervalで指定している
+  }}, 1500);
 }
 
 
