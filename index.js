@@ -29,6 +29,9 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
 
 let postAtMyHouse = (message) => {
   let reg = /.*電気.*つけて.*/;
+  if(message.username == "IFTTT"){
+    message.text = message.attachments[0].pretext.replace(/\s/g, "");
+  }
   if(message.text.match(/.*電気.*つけて.*/)){
     irRequestPost(irFreq.lightOn());
     rtm.sendMessage("電気つける!", myHouseGroup);
