@@ -9,25 +9,27 @@ const Net = require('net');
 const tvSocketClient = new Net.Socket();
 const cronJob = require('cron').CronJob;
 
-tvSocketClient.setKeepAlive(true);
-function connectToTV(){
-  tvSocketClient.connect(secret.tvPort(), secret.tvHost(), function() {
-    tvSocketClient.write(secret.tvName()+'\n');
-    tvSocketClient.write(secret.tvPass()+'\n');
-  });
-  console.log("tvScocketClient connected");
+function sendSignalToTV(command){
+  tvSocketClient.connect(secret.tvPort(), secret.tvHost(), function (data) {
+      console.log('tvSocketClient connected');
+      tvSocketClient.write(secret.tvName()+'\n');
+      tvSocketClient.write(secret.tvPass()+'\n');
+      tvSocketClient.write(command);
+      tvSocketClient.end();
+      tvSocketClient.destroy();
+  })
 }
-connectToTV();
 
 tvSocketClient.on('close', function(){
-  console.log("tvScocketClient closed");
-  connectToTV();
+  console.log("tvSocketClient closed");
+  tvSocketClient.end();
+  tvSocketClient.destroy();
 });
 
 tvSocketClient.on('error', function(){
-  console.log("tvScocketClient error");
+  console.log("tvSocketClient error");
   tvSocketClient.end();
-  connectToTV();
+  tvSocketClient.destroy();
 });
 
 function sendSignal(pinNum){
@@ -94,21 +96,21 @@ let postAtMyHouse = (message) => {
     rtm.sendMessage("エアコン消す!", myHouseGroup);
   }
   if(message.text.match(/.*テレビ.*つけて.*/)){
-    tvSocketClient.write('POWR1   \n');
+    sendSignalToTV("POWR1   \n");
     rtm.sendMessage("テレビの電源いじってみる!", myHouseGroup);
   }
   if(message.text.match(/.*テレビ.*消して.*/)){
-    tvSocketClient.write('POWR0   \n');
+    sendSignalToTV("POWR0   \n");
     rtm.sendMessage("テレビの電源いじってみる!", myHouseGroup);
   }
   if(message.text.match(/.*(チャンネル|ちゃんねる).*次.*/)){
     //irRequestPost(irFreq.tvChannelNext());
-    tvSocketClient.write('CHUP    \n');
+    sendSignalToTV('CHUP    \n');
     rtm.sendMessage("チャンネルかえる!", myHouseGroup);
   }
   if(message.text.match(/.*(チャンネル|ちゃんねる).*前.*/)){
     //irRequestPost(irFreq.tvChannelPrev());
-    tvSocketClient.write('CHDW    \n');
+    sendSignalToTV('CHDW    \n');
     rtm.sendMessage("チャンネルかえる!", myHouseGroup);
   }
   if(message.text.match(/.*音量.*上.*/)){
@@ -125,61 +127,61 @@ let postAtMyHouse = (message) => {
   }
   if(message.text.match(/.*NHK.*/)){
    // irRequestPost(irFreq.tvNHKSogo());
-    tvSocketClient.write('CTBD011 \n');
+    sendSignalToTV('CTBD011 \n');
     rtm.sendMessage("NHKにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*Eテレ.*/)){
     //irRequestPost(irFreq.tvNHKEtele());
-    tvSocketClient.write('CTBD021 \n');
+    sendSignalToTV('CTBD021 \n');
     rtm.sendMessage("Eテレにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*TVK.*/)){
     //irRequestPost(irFreq.tvTVK());
-    tvSocketClient.write('CTBD31 \n');
+    sendSignalToTV('CTBD31 \n');
     rtm.sendMessage("TVKにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*日テレ.*/)){
     //irRequestPost(irFreq.tvNipponTv());
-    tvSocketClient.write('CTBD041 \n');
+    sendSignalToTV('CTBD041 \n');
     rtm.sendMessage("日テレにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*テレ朝.*/)){
     //irRequestPost(irFreq.tvTvAsahi());
-    tvSocketClient.write('CTBD051 \n');
+    sendSignalToTV('CTBD051 \n');
     rtm.sendMessage("テレ朝にしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*TBS.*/)){
     //irRequestPost(irFreq.tvTBS());
-    tvSocketClient.write('CTBD061 \n');
+    sendSignalToTV('CTBD061 \n');
     rtm.sendMessage("TBSにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*テレ東.*/)){
     //irRequestPost(irFreq.tvTvTokyo());
-    tvSocketClient.write('CTBD071 \n');
+    sendSignalToTV('CTBD071 \n');
     rtm.sendMessage("テレ東にしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*フジテレビ.*/)){
-    tvSocketClient.write('CTBD081 \n');
+    sendSignalToTV('CTBD081 \n');
     rtm.sendMessage("フジテレビにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*Tokyo.*MX.*/)){
     //irRequestPost(irFreq.tvTokyoMX());
-    tvSocketClient.write('CTBD091 \n');
+    sendSignalToTV('CTBD091 \n');
     rtm.sendMessage("TokyoMXにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*キャスト.*/)){
     //inputModeInterval(2);
-    tvSocketClient.write('IAVD1   \n');
+    sendSignalToTV('IAVD1   \n');
     rtm.sendMessage("ChromeCastにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*スイッチ.*/)){
     //inputModeInterval(3);
-    tvSocketClient.write('IAVD2   \n');
+    sendSignalToTV('IAVD2   \n');
     rtm.sendMessage("switchにしてみる!", myHouseGroup);
   }
   if(message.text.match(/.*(PC)|(pc)|(ps4)|(PC4).*/)){
     //inputModeInterval(4);
-    tvSocketClient.write('IAVD3   \n');
+    sendSignalToTV('IAVD3   \n');
     rtm.sendMessage("pcかps4にしてみる!", myHouseGroup);
   }
 
