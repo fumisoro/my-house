@@ -19,11 +19,14 @@ function sleep(time) {
 }
 
 function sendSignalToTV(command) {
-  tvSocketClient.connect(secret.tvPort(), secret.tvHost(), function(data) {
+  tvSocketClient.connect(secret.tvPort(), secret.tvHost(), async function(
+    data
+  ) {
     console.log("tvSocketClient connected");
     tvSocketClient.write(secret.tvName() + "\n");
     tvSocketClient.write(secret.tvPass() + "\n");
     tvSocketClient.write(command);
+    await sleep(1000);
     tvSocketClient.end();
     tvSocketClient.destroy();
   });
