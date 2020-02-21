@@ -1,3 +1,4 @@
 node_modules
 secret.js
-.idea/workspace.xml
+.idea
+raspi-backup.img
