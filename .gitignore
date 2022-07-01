@@ -2,3 +2,4 @@ node_modules
 secret.js
 .idea
 raspi-backup.img
+nohup.out
