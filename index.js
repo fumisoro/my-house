@@ -1,7 +1,7 @@
 // http://bit-trade-one.co.jp/product/module/adrsir/
-let http = require("http");
+const http = require("http");
 const { RTMClient } = require('@slack/rtm-api');
-let secret = require("./secret");
+const secret = require("./secret");
 const Gpio = require("onoff").Gpio; //include onoff to interact with the GPIO
 const Net = require("net");
 const tvSocketClient = new Net.Socket();
@@ -47,11 +47,11 @@ function sendSignal(pinNum) {
   pin.writeSync(1);
 }
 
-let token = secret.slackToken();
+const token = secret.slackToken();
 
-let rtm = new RTMClient(token, { logLevel: "debug" });
+const rtm = new RTMClient(token, { logLevel: "debug" });
 
-let myHouseGroupId = secret.slackMyHouseGroupId;
+const myHouseGroupId = secret.slackMyHouseGroupId();
 
 rtm.on('message', event => {
   // my-houseチャンネルの投稿
