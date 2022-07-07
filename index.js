@@ -64,6 +64,20 @@ let onMessageReceived = async message => {
   // if (message.username == "IFTTT") {
   //   message.text = message.attachments[0].pretext.replace(/\s/g, "");
   // }
+  if (message.match(/.*(今|いま).*何度.*/)) {
+    rtm.sendMessage("温度計見てくるからちょっと待ってて！", myHouseGroupId);
+    const data = [];
+    http.get(secret.raspiZeroWUrl(), (res) => {
+      res.on('data', (chunk) => {
+        data.push(chunk);
+      }).on('end', () => {
+        const r = JSON.parse(Buffer.concat(data));
+        rtm.sendMessage(JSON.stringify(r), myHouseGroupId);
+      }).on("error", (err) => {
+        rtm.sendMessage('温度計壊れてたわ...', myHouseGroupId);
+      });
+    });
+  }
   if (message.match(/.*エアコン.*つけて.*/)) {
     // スイッチ1
     sendSignal(4);
