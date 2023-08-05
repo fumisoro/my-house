@@ -49,9 +49,13 @@ function sendSignal(pinNum) {
 
 const token = secret.slackToken();
 
-const rtm = new RTMClient(token, { logLevel: "debug" });
+const rtm = new RTMClient(token, { logLevel: "info" });
 
 const myHouseGroupId = secret.slackMyHouseGroupId();
+
+rtm.on('hello', event => {
+  rtm.sendMessage("起動したよ", myHouseGroupId);
+})
 
 rtm.on('message', event => {
   // my-houseチャンネルの投稿
@@ -64,6 +68,19 @@ let onMessageReceived = async message => {
   // if (message.username == "IFTTT") {
   //   message.text = message.attachments[0].pretext.replace(/\s/g, "");
   // }
+  if(message.match(/.*(何度|温度|湿度).*/)) {
+    http.get(secret.temperatureServerUrl(), (res) => {
+      const data = [];
+      res.on('data', (chunk) => {
+          data.push(chunk);
+      }).on('end', () => {
+          const events   = Buffer.concat(data);
+          rtm.sendMessage(JSON.stringify(JSON.parse(events)), myHouseGroupId);
+      });
+    }).on("error", (err) => {
+        rtm.sendMessage("Error: " + err.message, myHouseGroupId);
+    });
+  }
   if (message.match(/.*エアコン.*つけて.*/)) {
     // スイッチ1
     sendSignal(4);
