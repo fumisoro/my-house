@@ -1,0 +1,10 @@
+[Unit]
+Description=My House Keeper
+
+[Service]
+ExecStart=/usr/local/bin/node {{この部分はindex.jsへのフルパスに変更}}
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

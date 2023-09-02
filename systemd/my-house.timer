@@ -1,0 +1,9 @@
+[Unit]
+Description=my-house.service timer
+
+[Timer]
+OnBootSec=2min
+Unit=my-house.service
+
+[Install]
+WantedBy=multi-user.target
