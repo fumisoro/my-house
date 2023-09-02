@@ -57,6 +57,11 @@ rtm.on('hello', event => {
   rtm.sendMessage("起動したよ", myHouseGroupId);
 })
 
+rtm.on('error', event => {
+  console.error(`RTM client is crashed. error: ${event}`);
+  process.exit(1);
+})
+
 rtm.on('message', event => {
   // my-houseチャンネルの投稿
   if (event.channel === myHouseGroupId) {
