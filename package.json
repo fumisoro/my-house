@@ -4,7 +4,7 @@
   "description": "my house!",
   "main": "index.js",
   "dependencies": {
-    "@slack/rtm-api": "^6.0.0",
+    "@slack/rtm-api": "^6.2.1",
     "onoff": "^6.0.3"
   },
   "scripts": {
